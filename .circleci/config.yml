@@ -1,0 +1,56 @@
+version: 2.1
+
+orbs:
+    android: circleci/android@2.3.0
+    node: circleci/node@5.1.0
+    browser-tools: circleci/browser-tools@1.4.3
+jobs:
+    build:
+        docker:
+            - image: cimg/android:2023.06
+        steps:
+            - checkout
+            - node/install
+            - run:
+                name: Run node --version & npm --version
+                command: |
+                    node --version
+                    npm --version
+            -   run:
+                    name: Install grunt
+                    command: |
+                        npm install -g grunt-cli
+                        grunt --version
+            - browser-tools/install-chrome
+            - browser-tools/install-chromedriver
+            - run:
+                  name: Install OpenJDK 8
+                  command: |
+                      sudo apt-get update && sudo apt-get install -y openjdk-8-jdk
+                      sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+                      sudo update-alternatives --set javac /usr/lib/jvm/java-8-openjdk-amd64/bin/javac
+                      echo 'export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"' >> $BASH_ENV
+                      java -version
+
+            - android/restore-gradle-cache:
+                  cache-prefix: v1
+            - run:
+                  name: Echo Java home
+                  command: |
+                      echo $JAVA_HOME
+
+            - android/save-gradle-cache:
+                  cache-prefix: v1
+            - run:
+                name: Run App Designer in Browser
+                command: |
+                    npm install grunt --save-dev
+                    grunt
+workflows:
+    build-workflow:
+        jobs:
+            - build
+
+
+
+
