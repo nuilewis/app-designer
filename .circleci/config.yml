@@ -16,11 +16,6 @@ jobs:
                 command: |
                     node --version
                     npm --version
-            - run:
-                name: check chrome installation and path
-                command: |
-                    echo $PATH
-                    ls /usr/bin/
             -   run:
                     name: Install grunt
                     command: |
@@ -33,7 +28,6 @@ jobs:
                 command: |
                     export PATH=/usr/bin/google-chrome-stable:$PATH
                     echo $PATH
-
             - run:
                   name: Install OpenJDK 8
                   command: |
@@ -52,6 +46,11 @@ jobs:
 
             - android/save-gradle-cache:
                   cache-prefix: v1
+            - run:
+                name: check chrome installation and path
+                command: |
+                    echo $PATH
+                    ls /usr/bin/
             - run:
                 name: Run App Designer in Browser
                 command: |
