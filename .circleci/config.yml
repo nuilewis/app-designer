@@ -24,6 +24,12 @@ jobs:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
             - run:
+                name: Export Chrome to PATH
+                command: |
+                    export PATH=/usr/bin/google-chrome-stable:$PATH
+                    echo $PATH
+
+            - run:
                   name: Install OpenJDK 8
                   command: |
                       sudo apt-get update && sudo apt-get install -y openjdk-8-jdk
