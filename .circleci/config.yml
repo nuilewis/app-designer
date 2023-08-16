@@ -58,9 +58,11 @@ jobs:
                     echo $PATH
                     ls /usr/bin/
             - run:
-                name: Run App Designer in Browser
+                name: echo PATH then before installing grunt, and after and see then Run App Designer in Browser
                 command: |
+                    echo $PATH
                     npm install grunt --save-dev
+                    echo $PATH
                     grunt
 workflows:
     build-workflow:
