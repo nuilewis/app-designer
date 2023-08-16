@@ -33,11 +33,11 @@ jobs:
             - browser-tools/install-chrome
             - browser-tools/install-chromedriver
             - run:
-                name: Export Chrome to PATH
+                name: Export Chrome to PATH and check browser version
                 command: |
+                    gogogle-chrome --version
                     export PATH=/usr/bin/google-chrome-stable:$PATH
                     echo $PATH
-
             - android/restore-gradle-cache:
                   cache-prefix: v1
             - run:
@@ -48,11 +48,6 @@ jobs:
             - android/save-gradle-cache:
                   cache-prefix: v1
             - run:
-                name: Export Chrome to PATH again
-                command: |
-                    export PATH=/usr/bin/google-chrome-stable:$PATH
-                    echo $PATH
-            - run:
                 name: check chrome installation and path
                 command: |
                     echo $PATH
@@ -60,11 +55,13 @@ jobs:
             - run:
                 name: echo PATH then before installing grunt, and after and see then Run App Designer in Browser
                 command: |
-                    echo $PATH
                     npm install grunt --save-dev
-                    export PATH=/usr/bin/google-chrome-stable:$PATH
-                    echo $PATH
-                    grunt --verbose
+            - run:
+                name: check PATH
+                command: echo $PATH
+            - run:
+                name: Run Grunt
+                command: grunt --verbose
 workflows:
     build-workflow:
         jobs:
