@@ -64,7 +64,7 @@ jobs:
                     npm install grunt --save-dev
                     export PATH=/usr/bin/google-chrome-stable:$PATH
                     echo $PATH
-                    grunt
+                    grunt --verbose
 workflows:
     build-workflow:
         jobs:
