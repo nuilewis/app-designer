@@ -48,6 +48,11 @@ jobs:
             - android/save-gradle-cache:
                   cache-prefix: v1
             - run:
+                name: Export Chrome to PATH again
+                command: |
+                    export PATH=/usr/bin/google-chrome-stable:$PATH
+                    echo $PATH
+            - run:
                 name: check chrome installation and path
                 command: |
                     echo $PATH
